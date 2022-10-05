@@ -193,27 +193,15 @@ async function render_plan() {
 
     // Display plan name
     $plan.innerHTML = plan.plan;
-    if (plan.plan === 'free') {
-        if (settings.key !== '') {
-            $incorrect_key.classList.remove('hidden');
-        }
-        else {
-            $incorrect_key.classList.add('hidden');
-        }
-        $plan.classList.remove('green');
-        $plan.classList.add('red');
-    }
-    else {
-        $incorrect_key.classList.add('hidden');
-        $plan.classList.remove('red');
-        $plan.classList.add('green');
-    }
 
-    if(plan.plan.includes("Banned")) {
-        $ipbanned_warning.classList.remove('hidden');
-    } else {
-        $ipbanned_warning.classList.add('hidden');
-    }
+    const freePlan = plan.plan === 'free';
+    $incorrect_key.classList.toggle('hidden', !freePlan || settings.key !== '')
+    $plan.classList.toggle('green', !freePlan);
+    $plan.classList.toggle('red', freePlan);
+
+    const userBanned = plan.plan.toLowerCase().includes('banned');
+    $ipbanned_warning.classList.toggle('hidden', !userBanned);
+
     // if (['Invalid', 'Banned'].includes(plan.plan)) {
     //     // Show loading icon for remaining credit while the server resets quota
     //     $credit.classList.remove('green');
@@ -226,20 +214,13 @@ async function render_plan() {
     // Display remaining credits
     if (secs_until_reset === 0) {
         // Show loading icon for remaining credit while the server resets quota
-        $credit.classList.remove('green');
-        $credit.classList.remove('red');
+        $credit.classList.remove('green', 'red');
         $credit.innerHTML = '<div class="loading"><div></div><div></div><div></div><div></div></div>';
     }
     else {
         $credit.innerHTML = `${plan.credit} / ${plan.quota}`;
-        if (plan.credit === 0) {
-            $credit.classList.remove('green');
-            $credit.classList.add('red');
-        }
-        else {
-            $credit.classList.remove('red');
-            $credit.classList.add('green');
-        }
+        $credit.classList.toggle('green', plan.credit !== 0);
+        $credit.classList.toggle('red', plan.credit === 0);
     }
 
     // Display time until reset
