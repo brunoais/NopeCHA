@@ -22,10 +22,7 @@
             return;
         }
 
-        if (enabled === true && $e.classList.contains('rc-imageselect-tileselected')) {
-            $e.click();
-        }
-        else if (enabled === false && !$e.classList.contains('rc-imageselect-tileselected')) {
+        if (enabled === $e.classList.contains('rc-imageselect-tileselected')) {
             $e.click();
         }
     }
@@ -34,14 +31,8 @@
         if (!$e) {
             return;
         }
-        if ($e.classList.contains('rc-imageselect-tileselected')) {
-            is_mousedown = true;
-            is_selecting = true;
-        }
-        else {
-            is_mousedown = true;
-            is_selecting = false;
-        }
+        is_mousedown = true;
+        is_selecting = $e.classList.contains('rc-imageselect-tileselected');
         $start = $e;
     });
     document.addEventListener('mouseup', e => {
