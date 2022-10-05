@@ -194,7 +194,7 @@ async function render_plan() {
     // Display plan name
     $plan.innerHTML = plan.plan;
 
-    const freePlan = plan.plan === 'free';
+    const freePlan = plan.plan.toLowerCase().includes('free');
     $incorrect_key.classList.toggle('hidden', !freePlan || settings.key !== '')
     $plan.classList.toggle('green', !freePlan);
     $plan.classList.toggle('red', freePlan);
