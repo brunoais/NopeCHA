@@ -126,10 +126,6 @@ export class Time {
 
 
 export class Util {
-    static sleep(t) {
-        return new Promise(resolve => setTimeout(resolve, t));
-    }
-
     static pad_left(s, char, n) {
         while (`${s}`.length < n) {
             s = `${char}${s}`;

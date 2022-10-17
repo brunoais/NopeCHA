@@ -68,18 +68,22 @@ class Tab {
 
 class Settings {
     static DEFAULT = {
-        version: 2,
+        version: 3,
+
+        key: '',
 
         hcaptcha_auto_solve: true,
         hcaptcha_solve_delay: 3000,
         hcaptcha_auto_open: true,
-        hcaptcha_open_delay: 1000,
 
         recaptcha_auto_solve: true,
         recaptcha_solve_delay: 1000,
         recaptcha_auto_open: true,
-        recaptcha_open_delay: 1000,
         recaptcha_solve_method: 'image',
+
+        ocr_auto_solve: true,
+        ocr_image_selector: '',
+        ocr_input_selector: '',
 
         debug: false,
     };
@@ -103,7 +107,9 @@ class Settings {
                 else {
                     Settings.data = settings;
                     if (Settings.data.version !== Settings.DEFAULT.version) {
+                        const key = Settings.data.key;
                         await Settings.reset();
+                        Settings.data.key = key;
                     }
                 }
                 resolve();

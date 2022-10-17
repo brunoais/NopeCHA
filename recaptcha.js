@@ -237,7 +237,7 @@
             return;
         }
         was_solved = false;
-        await Time.sleep(settings.recaptcha_open_delay);
+        await Time.sleep(500);
         open_image_frame();
     }
 

@@ -66,7 +66,6 @@
             '0455': 's',
             '0445': 'x',
             '0443': 'y',
-
             '0335': '-',
         };
 
@@ -203,7 +202,7 @@
             return;
         }
         was_solved = false;
-        await Time.sleep(settings.hcaptcha_open_delay);
+        await Time.sleep(500);
         open_image_frame();
     }
 
