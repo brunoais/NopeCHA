@@ -90,10 +90,18 @@ def in_dir(new_path):
 
 
 def uglify(file: Path):
-    return subprocess.check_output([
-        'uglifyjs', '--compress', '--mangle', '--no-annotations', '-c', 'drop_console',
-        '--', os.fspath(file.absolute())
-    ])
+    return subprocess.check_output(
+        [
+            "uglifyjs",
+            "--compress",
+            "--mangle",
+            "--no-annotations",
+            "-c",
+            "drop_console",
+            "--",
+            os.fspath(file.absolute()),
+        ]
+    )
 
 
 def process_file(source, dist_path, export_directory, zip):
@@ -133,8 +141,9 @@ with in_dir(dir_path):
         here_path = Path(".")
 
         # This is slow but there should be very few files, so it should be OK
-        files_to_include = [f for f in
-            itertools.chain(
+        files_to_include = [
+            f
+            for f in itertools.chain(
                 here_path.glob("*.html"),
                 here_path.glob("*.css"),
                 here_path.glob("*.js"),
@@ -143,7 +152,6 @@ with in_dir(dir_path):
             )
             if f.name != "utils.js"
         ]
-
 
         versions = filter(lambda p: p.is_dir(), VERSIONS_PATH.iterdir())
         # This could be run just once per program run but it would bring unnecessary complexity to the code below
@@ -189,16 +197,20 @@ with in_dir(dir_path):
                     )
 
                 # utils.js is generated from utils.mjs so they can stay synchronized for both usages
-                utils_module = Path('utils.mjs').read_text()
-                printe('debug: generating utils from mutils')
+                utils_module = Path("utils.mjs").read_text()
+                printe("debug: generating utils from mutils")
 
-                utils_js = re.sub(r'^export (class|const|function)', r'\1', utils_module, flags=re.MULTILINE)
-                (export_directory / 'utils.js').write_text(utils_js)
+                utils_js = re.sub(
+                    r"^export (class|const|function)",
+                    r"\1",
+                    utils_module,
+                    flags=re.MULTILINE,
+                )
+                (export_directory / "utils.js").write_text(utils_js)
 
                 if zip:
-                    printe('debug: store utils', version_manifest)
-                    zip.writestr('utils.js', utils_js)
-
+                    printe("debug: store utils", version_manifest)
+                    zip.writestr("utils.js", utils_js)
 
                 version_manifest = version / "manifest.json"
 
