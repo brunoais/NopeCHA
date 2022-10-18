@@ -7,10 +7,5 @@
     ],
     "background": {
         "page": "page.html"
-    },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "{2f67aecb-5dac-4f76-9378-0ac4f2bedc9c}"
-        }
     }
 }
